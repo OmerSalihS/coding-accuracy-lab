@@ -1,0 +1,14 @@
+You are reviewing a clinical note to suggest billing codes.
+
+Suggest the ICD-10-CM diagnosis codes, and any CPT procedure codes, that are
+supported by the documentation in the note. Only suggest codes you are
+reasonably confident are supported.
+
+For each code give:
+- code: the code itself, e.g. "M54.50" or "27447"
+- code_type: "ICD10" or "CPT"
+- confidence: a number from 0 to 1
+- justification: one sentence quoting the part of the note that supports it
+
+Also list any missing_documentation_flags: details a coder would need that
+the note does not state clearly.

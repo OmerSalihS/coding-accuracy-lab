@@ -17,6 +17,11 @@ SPECIALTIES = ["Orthopedic", "Cardiovascular / Pulmonary", "Gastroenterology"]
 EVAL_PER_SPECIALTY = 14   # 42 candidates; you label ~25 of them
 MIN_CHARS, MAX_CHARS = 800, 5000   # skip stubs and very long notes for labeling
 SEED = 42
+# Eval notes found unusable while labeling: {source_id: reason}. They are removed
+# AFTER the random pick, so the rest of the eval set stays exactly the same.
+EXCLUDED_FROM_EVAL = {
+    2257: "transcription cut off mid-report (ends at 'L4-5:'), no impression to code",
+}
 
 
 def read_notes():
@@ -47,7 +52,7 @@ def pick_eval_set(notes):
         pool = [n["source_id"] for n in notes
                 if n["specialty"] == specialty and MIN_CHARS <= len(n["raw_text"]) <= MAX_CHARS]
         chosen.update(rng.sample(pool, EVAL_PER_SPECIALTY))
-    return chosen
+    return chosen - EXCLUDED_FROM_EVAL.keys()
 
 
 def main():
